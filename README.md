@@ -46,4 +46,52 @@ pip3 install pymodbus flask
 ```
 ### Setting Up the Modbus Server
 
+1.1 Install the Modbus Server
+
+Using modbus-server
+
+````bash
+# Update package lists
+sudo apt-get update
+
+# Install modbus-server and dependencies
+sudo apt-get install libmodbus-dev modbus-server
+````
+Using Python and pymodbus
+
+Install pymodbus:
+
+````bash
+pip3 install pymodbus
+````
+Create a Modbus Server Script:
+
+Create a file named modbus_server.py:
+
+````bash
+from pymodbus.server.sync import StartTcpServer
+from pymodbus.device import ModbusDeviceIdentification
+from pymodbus.datastore import ModbusSlaveContext, ModbusServerContext
+from pymodbus.datastore import ModbusSequentialDataBlock
+
+# Initialize data store
+store = ModbusSlaveContext(
+    di=ModbusSequentialDataBlock(0, [17]*100),
+    co=ModbusSequentialDataBlock(0, [17]*100),
+    hr=ModbusSequentialDataBlock(0, [17]*100),
+    ir=ModbusSequentialDataBlock(0, [17]*100))
+context = ModbusServerContext(slaves=store, single=True)
+
+# Set up the server
+identity = ModbusDeviceIdentification()
+identity.VendorName = 'My Company'
+identity.ProductCode = 'MP'
+identity.VendorUrl = 'http://example.com'
+identity.ProductName = 'Modbus Server'
+identity.ModelName = 'Modbus Server Example'
+identity.MajorMinorRevision = '1.0'
+
+# Start the server
+StartTcpServer(context, identity=identity, address=("0.0.0.0", 502))
+````
 
