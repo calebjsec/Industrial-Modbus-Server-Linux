@@ -58,16 +58,19 @@ sudo apt-get update
 # Install modbus-server and dependencies
 sudo apt-get install libmodbus-dev modbus-server
 ````
-**Using Python and pymodbus**
 
-**Install pymodbus:**
+*1.2 Install pymodbus*
 
 ````bash
 pip3 install pymodbus
 ````
-Create a Modbus Server Script:
 
-Create a file named modbus_server.py:
+###Firewall Configuration
+
+**2.1 Running Modbus over TCP**
+
+*Create a Modbus Server Script*
+*Create a file named modbus_server.py*
 
 ````bash
 from pymodbus.server.sync import StartTcpServer
@@ -96,29 +99,8 @@ identity.MajorMinorRevision = '1.0'
 # Start the server
 StartTcpServer(context, identity=identity, address=("0.0.0.0", 502))
 ````
-**1.2 Running Modbus over TCP**
-
-Modbus TCP: Runs on port 502 by default. The example script provided sets up a TCP server.
-
-### Firewall Configuration
-
-**2.1 Using UFW:**
+*Save this script as modbus_server.py and run it*
 
 ````bash
-# Install UFW if not already installed
-sudo apt-get install ufw
-
-# Enable UFW
-sudo ufw enable
-
-# Allow SSH connections for remote management
-sudo ufw allow 22/tcp
-
-# Allow Modbus TCP communication
-sudo ufw allow 502/tcp
-
-# Check UFW status
-sudo ufw status
+python3 modbus_server.py
 ````
-
-*2.2 Using iptables*
