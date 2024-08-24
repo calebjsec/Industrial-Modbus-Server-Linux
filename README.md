@@ -1,6 +1,6 @@
-# Industrial Modbus Server Setup with Firewall Security and Web Management on Linux
+# Industrial Modbus Server Setup with Firewall Security and Web Management on Linux Server
 
-This project demonstrates the setup of a Modbus server on a Linux machine, the configuration of firewall rules for security, and the creation of a web panel for monitoring and managing Modbus communication. The project includes detailed steps, images, and documentation on compliance with SOX and NERC CIP standards.
+This project demonstrates the setup of a Modbus server on a Linux (Ubuntu) VPS, configuring firewall rules for security, and creating a web panel for monitoring and managing Modbus communication. The project includes detailed steps, images, and documentation on compliance with SOX and NERC CIP standards.
 
 ## Table of Contents
 - [Introduction](#introduction)
@@ -43,5 +43,7 @@ sudo apt-get install python3 python3-pip
 
 # Install required Python packages
 pip3 install pymodbus flask
+```
+### Setting Up the Modbus Server
 
 
