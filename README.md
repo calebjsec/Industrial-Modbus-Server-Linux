@@ -101,6 +101,42 @@ StartTcpServer(context, identity=identity, address=("0.0.0.0", 502))
 ````
 *Save this script as modbus_server.py and run it*
 
-````bash
+````
 python3 modbus_server.py
 ````
+
+
+**2.2 Using iptables**
+
+*-A INPUT: Appends the rule to the INPUT chain.
+-p tcp: Applies to TCP packets.
+-s 217.20.242.107: Source IP address of the VPN.
+--dport 80: Destination port for HTTP.
+-j ACCEPT: Allows the packets.*
+
+````bash
+# Allow Incoming SSH Connections from the VPN IP Address
+sudo iptables -A INPUT -p tcp -s 217.20.242.107 --dport 22 -j ACCEPT
+
+# Allow Incoming Modbus TCP Connections from the VPN IP Address
+sudo iptables -A INPUT -p tcp -s 217.20.242.107 --dport 502 -j ACCEPT
+
+# Allow Incoming HTTP Connections from the VPN IP Address
+sudo iptables -A INPUT -p tcp -s 217.20.242.107 --dport 80 -j ACCEPT
+
+# Allow Incoming HTTPS Connections from the VPN IP Address
+sudo iptables -A INPUT -p tcp -s 217.20.242.107 --dport 443 -j ACCEPT
+
+# Block All Other Traffic to Ports 22, 80, 443, 502
+sudo iptables -A INPUT -p tcp --dport 22 -j DROP
+sudo iptables -A INPUT -p tcp --dport 80 -j DROP
+sudo iptables -A INPUT -p tcp --dport 443 -j DROP
+sudo iptables -A INPUT -p tcp --dport 502 -j DROP
+
+# Save IP tables & make persistent
+sudo apt-get install iptables-persistent
+iptables-save```
+
+
+
+
