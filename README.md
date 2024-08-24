@@ -114,7 +114,7 @@ python3 modbus_server.py
 --dport 80: Destination port for HTTP.
 -j ACCEPT: Allows the packets.*
 
-````bash
+````
 # Allow Incoming SSH Connections from the VPN IP Address
 sudo iptables -A INPUT -p tcp -s 217.20.242.107 --dport 22 -j ACCEPT
 
@@ -135,7 +135,67 @@ sudo iptables -A INPUT -p tcp --dport 502 -j DROP
 
 # Save IP tables & make persistent
 sudo apt-get install iptables-persistent
-iptables-save```
+iptables-save
+````
+## Setting Up the Web Panel
+
+**3.1 Install Flask**
+
+````
+pip3 install flask
+````
+**3.2 Create a Web Panel**
+
+*Create the Web Panel Script*
+*Create a file named web_panel.py*
+
+````
+from flask import Flask, render_template
+from pymodbus.client.sync import ModbusTcpClient
+
+app = Flask(__name__)
+
+@app.route('/')
+def index():
+    client = ModbusTcpClient('127.0.0.1', port=502)
+    client.connect()
+    rr = client.read_holding_registers(0, 10, unit=1)
+    client.close()
+    return render_template('index.html', registers=rr.registers)
+
+if __name__ == '__main__':
+    app.run(debug=True)
+````
+
+**Create the HTML Template**
+
+*Create a directory named templates and add a file named index.html inside it:*
+
+````
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Modbus Server Panel</title>
+</head>
+<body>
+    <h1>Modbus Holding Registers</h1>
+    <ul>
+    {% for reg in registers %}
+        <li>{{ reg }}</li>
+    {% endfor %}
+    </ul>
+</body>
+</html>
+````
+
+*Run the Flask Application*
+
+````
+python3 web_panel.py
+````
+
+*Access the web panel at http://serveripaddress:5000 in your browser*
+
 
 
 
