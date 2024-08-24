@@ -43,3 +43,19 @@ sudo apt-get install python3 python3-pip
 
 # Install required Python packages
 pip3 install pymodbus flask
+
+# Install UFW
+sudo apt-get install ufw
+
+# Enable UFW
+sudo ufw enable
+
+# Allow SSH connections
+sudo ufw allow 22/tcp
+
+# Allow Modbus TCP communication
+sudo ufw allow 502/tcp
+
+# Check the status of UFW
+sudo ufw status
+
