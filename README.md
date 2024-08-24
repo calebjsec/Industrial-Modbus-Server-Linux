@@ -46,9 +46,9 @@ pip3 install pymodbus flask
 ```
 ### Setting Up the Modbus Server
 
-1.1 Install the Modbus Server
+**1.1 Install the Modbus Server**
 
-Using modbus-server
+**Using modbus-server**
 
 ````bash
 # Update package lists
@@ -57,9 +57,9 @@ sudo apt-get update
 # Install modbus-server and dependencies
 sudo apt-get install libmodbus-dev modbus-server
 ````
-Using Python and pymodbus
+**Using Python and pymodbus**
 
-Install pymodbus:
+**Install pymodbus:**
 
 ````bash
 pip3 install pymodbus
