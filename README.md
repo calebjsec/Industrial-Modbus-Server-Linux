@@ -65,7 +65,7 @@ sudo apt-get install libmodbus-dev modbus-server
 pip3 install pymodbus
 ````
 
-###Firewall Configuration
+## Firewall Configuration
 
 **2.1 Running Modbus over TCP**
 
